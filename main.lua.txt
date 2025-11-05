@@ -1,0 +1,59 @@
+ball_x = 10
+ball_y = 5
+ball_dx = 1
+ball_dy = 1
+paddle1_y = 5
+paddle2_y = 5
+height = 10
+width = 20
+
+function draw()
+    print("\n\n\n")
+    for y = 1, height do
+        for x = 1, width do
+            if x == ball_x and y == ball_y then
+                io.write("O")
+            elseif x == 2 and y == paddle1_y then
+                io.write("|")
+            elseif x == width - 1 and y == paddle2_y then
+                io.write("|")
+            else
+                io.write(" ")
+            end
+        end
+        print()
+    end
+end
+
+function update()
+    ball_x = ball_x + ball_dx
+    ball_y = ball_y + ball_dy
+
+    if ball_y <= 1 or ball_y >= height then
+        ball_dy = -ball_dy
+    end
+
+    if ball_x == 3 and ball_y == paddle1_y then
+        ball_dx = -ball_dx
+    end
+
+    if ball_x == width - 2 and ball_y == paddle2_y then
+        ball_dx = -ball_dx
+    end
+
+    if ball_x <= 1 or ball_x >= width then
+        ball_x = width // 2
+        ball_y = height // 2
+        ball_dx = -ball_dx
+    end
+
+    if ball_y > paddle1_y then paddle1_y = paddle1_y + 1 end
+    if ball_y < paddle1_y then paddle1_y = paddle1_y - 1 end
+    if ball_y > paddle2_y then paddle2_y = paddle2_y + 1 end
+    if ball_y < paddle2_y then paddle2_y = paddle2_y - 1 end
+end
+
+for i = 1, 30 do
+    draw()
+    update()
+end
